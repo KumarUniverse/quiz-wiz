@@ -20,12 +20,19 @@ for link in link_list:
         baby_soup = BeautifulSoup(page, "html.parser")
 
         # ques and answers: new changes
+        answer = baby_soup.find('span', attrs={"class": "TermText notranslate lang-en"})
+        temp = str(soup.select_one("."))
+        #temp = temp
+        #num_terms = int(temp)
+        print(temp)
+        '''
         while: 
-            answer = soup.find('span', attrs={'class': "TermText notranslate lang-en"})
-            question = soup.find('span', attrs={'class': "TermText notranslate lang-en"})
+            question = baby_soup.find('span', attrs={"class": "TermText notranslate lang-en"})
             questions_and_answers[question] = answer # add key-value pair
-            if soup.find('span', attrs={'class': "TermText notranslate lang-en"}) == NULL:
-                break
+            if (answer = baby_soup.find('span',
+                attrs={'class': "TermText notranslate lang-en"})) == NULL: break
+        '''
     #soup.findAll('p')
 
     # page += 1;
+#Muki will give us a URL to pass a parameter to, from which we can get the data.
