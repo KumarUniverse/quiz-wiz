@@ -1,73 +1,105 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <style>
         body {
             background-color: black;
         }
     </style>
-	<title>Quiz Wiz</title>
-	<h1>Quiz Wiz</h1>
-    <h2><i>Common Computer Science Terminology</i></h2>
+    <script
+              src="https://code.jquery.com/jquery-3.3.1.min.js"
+              integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+              crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
-    <script src="stopwatch.js" async></script>
-    <link rel="stylesheet" href="quiz-style.css"/>
-    <h4>Time yourself and see if you're</h4>
-    <h4>good as you think you are!</h4>
-    <h3><time>00:00:00</time></h3>
-    <button id="start" class="button1">start</button>
-    <button id="stop" class="button2">stop</button>
-    <button id="reset" class="button3">reset</button>
-    	<var>word1</var>
-	<h5>For the following questions, choose the correct term with the given definion. </h5>
-	<p>1.Starting up a computer form a halted or pwered down condtition</p>
-        <form>
-            <label class="container">
-                <input type="radio" name="answer" value="correct"> Boot Process<br>
-                <input type="radio" name="answer" value="wrong"> Data Structure<br>
-                <input type="radio" name="answer" value="wrong"> Proccessor<br> 
-                <input type="radio" name="answer" value="wrong"> Conditionals<br>
-                <button id="submit" class="button4">Submit</button>
-            </label>
-        </form> 
-    <p>2. The Principal that ISPs should deliver data to everyone equally, as fast as the technology allows?</p>
-        <form>
-            <label class="container">
-                <input type="radio" name="answer" value="wrong"> Cybersecurity<br>
-                <input type="radio" name="answer" value="wrong"> Virtual<br>
-                <input type="radio" name="answer" value="correct"> Network Neutrality<br>
-                <input type="radio" name="answer" value="wrong"> The Internet of Things<br>
-                <button id="submit" class="button4">Submit</button>
-            </label>
-        </form>
-    <p>3. A service that provides storage space and other resources on the internet</p>
-        <form>
-            <label class="container">
-                <input type="radio" name="answer" value="wrong"> APIs<br>
-                <input type="radio" name="answer" value="wrong"> MAC Address<br>
-                <input type="radio" name="answer" value="wrong"> Fiber optic cables<br>
-                <input type="radio" name="answer" value="correct"> Cloud Computing<br>
-                <button id="submit" class="button4">Submit</button>
-            </label>
-        </form>
-    <p>4. A device that provides power to a computer</p>
-        <form>
-            <label class="container">
-                <input type="radio" name="answer" value="wrong"> ISP<br>
-                <input type="radio" name="answer" value="correct"> Power Supply<br>
-                <input type="radio" name="answer" value="wrong"> Bubble sort<br>
-                <input type="radio" name="answer" value="wrong"> Hard drive<br>
-                <button id="submit" class="button4">Submit</button>
-            </label>
-        </form>    
-    <p>5. Any type of computer network that is not connected by cables of any kind</p>
-        <form>
-            <label class="container">
-                <input type="radio" name="answer" value="correct"> Wireless Connection<br>
-                <input type="radio" name="answer" value="wrong"> Protocol<br>
-                <input type="radio" name="answer" value="wrong"> DDOS Attack<br>
-                <input type="radio" name="answer" value="wrong"> Insertion Sort<br>
-                <button id="submit" class="button4">Submit</button>
-            </label>
-        </form>    
+            <script src="stopwatch.js" async></script>
+            <link rel="stylesheet" href="quiz-style.css"/>
+    <script type="text/javascript">
+        $('body').ready(function(){
+            var wins = 0;
+            var losses = 0;
+
+            window.win = function() {
+                console.log('Inside win');
+                wins=wins+1;
+                document.getElementById('win').innerHTML=wins;
+            };
+
+            window.lose = function() {
+                losses=losses+1;
+                document.getElementById('lose').innerHTML=losses;
+            };
+            window.submit = function() {
+                console.log("Submitting now");
+                alert("You got " + wins + " out of 5 correct.");
+            };
+        })
+            
+        </script>
+    <title>Quiz Wiz</title>
+</head>
+    <body>
+            <h1>Quiz Wiz</h1>
+            <h2><i>Common Computer Science Terminology</i></h2>
+            
+            <div>
+            <h4>Time yourself and see if you're</h4>
+            <h4>good as you think you are!</h4>
+            <h3><time>00:00:00</time></h3>
+            <button id="start" class="button1">start</button>
+            <button id="stop" class="button2">stop</button>
+            <button id="reset" class="button3">reset</button>
+                <!-- <var>word1</var> -->
+            <p>For the following questions, choose the correct term with the given definion:</p>
+            <p>1.Starting up a computer form a halted or powered down condtition</p>
+                <form>
+                    <label class="container">
+                        <input type="radio" name="answer" value="No" id="win" onclick="window.win()"> Boot Process<br>
+                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> Data Structure<br>
+                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> Proccessor<br> 
+                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> Conditionals<br>
+                    </label>
+                </form> 
+            <p>2. The principal that ISPs should deliver data to everyone equally, as fast as the technology allows?</p>
+                <form>
+                    <label class="container">
+                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> Cybersecurity<br>
+                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> Virtual<br>
+                        <input type="radio" name="answer" value="No" id="win" onclick="window.win()"> Network Neutrality<br>
+                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> The Internet of Things<br>
+                    </label>
+                </form>
+            <p>3. A service that provides storage space and other resources on the internet</p>
+                <form>
+                    <label class="container">
+                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> APIs<br>
+                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> MAC Address<br>
+                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> Fiber optic cables<br>
+                        <input type="radio" name="answer" value="No" id="win" onclick="window.win()"> Cloud Computing<br>
+                    </label>
+                </form>
+            <p>4. A device that provides power to a computer</p>
+                <form>
+                    <label class="container">
+                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> ISP<br>
+                        <input type="radio" name="answer" value="No" id="win" onclick="window.win()"> Power Supply<br>
+                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> Bubble sort<br>
+                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> Hard drive<br>
+                    </label>
+                </form>    
+            <p>5. Any type of computer network that is not connected by cables of any kind</p>
+                <form>
+                    <label class="container">
+                        <input type="radio" name="answer" value="No" id="win" onclick="window.win()"> Wireless Connection<br>
+                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> Protocol<br>
+                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> DDOS Attack<br>
+                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> Insertion Sort<br>
+                        <button id="submit" class="button4" onclick="window.submit()">Submit</button>
+                    </label>
+                </form> 
+                <label class="container">
+            </div>  
+        
+    </body>
+
 </html>
