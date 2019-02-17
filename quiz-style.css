@@ -1,14 +1,15 @@
 
 h1 {
-  font-family: sans-serif, monospace;
-  color: white;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-weight: 20;
+  color: yellow;
   font-size: 50px;  
   text-align: center;    
 }
 
 h2 {
   font-family: sans-serif, monospace;
-  color: gray;
+  color: white;
   font-size: 25px;
   text-align: center;
 }
@@ -17,7 +18,7 @@ h3 {
   font-family: 'Open Sans Condensed', sans-serif;
   color: gray;
   font-size: 25px;
-  margin-left: 32px;
+  margin-left: 38px;
 }
 
 h4 {
@@ -37,33 +38,50 @@ h5 {
   margin-top: 200px;
 }
 
+p {
+  font-family: sans-serif, monospace;
+  color: lightblue;
+  font-size: 20px;
+  margin-left: 400px;
+  margin-top: 30px;
+}
+
 .button1 {
-  font-family: cursive, sans-serif, monospace;
+  font-family: sans-serif, monospace;
   background-color: black; 
   color: limegreen;
   border: none;
 }
 
 .button2 {
-  font-family: cursive, sans-serif, monospace;
+  font-family: sans-serif, monospace;
   background-color: black; 
   color: red;
   border: none;
 }
 
 .button3 {
-  font-family: cursive, sans-serif, monospace;
+  font-family: sans-serif, monospace;
   background-color: black; 
   color: yellow;
   border: none;
 }
 
-@-webkit-keyframes hue {
-  from {
-    -webkit-filter: hue-rotate(0deg);
-  }
+.button4 {
+  background-color: lightgreen;
+  vertical-align: middle;
+  margin-left: 100px;
+  border: none;
+}
 
-  to {
-    -webkit-filter: hue-rotate(360deg);
-  }
+.container {  
+  display: block;
+  color: white;
+  font-family: sans-serif, monospace;  
+  vertical-align: middle;
+  margin: 0px;
+  padding-left: 25px;
+  margin-left: 400px;
+  cursor: pointer;
+  font-size: 18px;
 }
