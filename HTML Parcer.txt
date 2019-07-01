@@ -1,0 +1,316 @@
+New code
+
+newurl = Cases[xml, XMLElement[_, {"class" -> "UILinkBox-link"}, ___], 
+  Infinity]
+
+{XMLElement[
+  "div", {"class" -> "UILinkBox-link"}, {XMLElement[
+    "a", {"shape" -> "rect", "class" -> "UILink", "data-sourcename" -> "", 
+     "href" -> 
+      "https://quizlet.com/355362964/photo-2-the-business-of-photography-\
+flash-cards/"}, {}]}], 
+ XMLElement[
+  "div", {"class" -> "UILinkBox-link"}, {XMLElement[
+    "a", {"shape" -> "rect", "class" -> "UILink", "data-sourcename" -> "", 
+     "href" -> 
+      "https://quizlet.com/355289399/photo-1-basic-lighting-flash-cards/"}, \
+{}]}], XMLElement[
+  "div", {"class" -> "UILinkBox-link"}, {XMLElement[
+    "a", {"shape" -> "rect", "class" -> "UILink", "data-sourcename" -> "", 
+     "href" -> 
+      "https://quizlet.com/355122675/3d-aesthetics-flash-cards/"}, {}]}], 
+ XMLElement[
+  "div", {"class" -> "UILinkBox-link"}, {XMLElement[
+    "a", {"shape" -> "rect", "class" -> "UILink", "data-sourcename" -> "", 
+     "href" -> 
+      "https://quizlet.com/355033485/careers-in-photography-flash-cards/"}, \
+{}]}], XMLElement[
+  "div", {"class" -> "UILinkBox-link"}, {XMLElement[
+    "a", {"shape" -> "rect", "class" -> "UILink", "data-sourcename" -> "", 
+     "href" -> 
+      "https://quizlet.com/314340708/art-history-renaissance-art-flash-cards/\
+"}, {}]}], 
+ XMLElement[
+  "div", {"class" -> "UILinkBox-link"}, {XMLElement[
+    "a", {"shape" -> "rect", "class" -> "UILink", "data-sourcename" -> "", 
+     "href" -> "https://quizlet.com/358735719/art-flash-cards/"}, {}]}], 
+ XMLElement[
+  "div", {"class" -> "UILinkBox-link"}, {XMLElement[
+    "a", {"shape" -> "rect", "class" -> "UILink", "data-sourcename" -> "", 
+     "href" -> 
+      "https://quizlet.com/225197506/chapter-8-print-type-flash-cards/"}, \
+{}]}], XMLElement[
+  "div", {"class" -> "UILinkBox-link"}, {XMLElement[
+    "a", {"shape" -> "rect", "class" -> "UILink", "data-sourcename" -> "", 
+     "href" -> 
+      "https://quizlet.com/253354953/art-appreciation-exam-3-flash-cards/"}, \
+{}]}]}
+
+listurl = Cases[newurl, XMLelement[_, {"class" -> "href"}, ___], Infinity]
+
+{}
+
+xml = ImportString[body, {"HTML", "XMLObject"}];
+words = Cases[xml, XMLElement[_, {"class" -> "SetPageTerm-wordText"}, ___], 
+   Infinity];
+
+listword = 
+ Cases[words, 
+  XMLElement[_, {"class" -> "TermText notranslate lang-en"}, bird___] :> 
+   First@bird, Infinity]
+
+{"MIDPOINT", "SEGMENT", "RIGHT ANGLE", "RAY", "COLLINEAR", "COPLANAR"}
+
+xml = ImportString[body, {"HTML", "XMLObject"}];
+defs = Cases[xml, 
+  XMLElement[_, {"class" -> "SetPageTerm-definitionText"}, ___], Infinity]
+
+{XMLElement[
+  "div", {"class" -> "SetPageTerm-definitionText"}, {XMLElement[
+    "span", {"class" -> 
+      "TermText notranslate lang-en"}, {"The point on a segment exactly \
+halfway between the endpoints of the segment."}]}], 
+ XMLElement[
+  "div", {"class" -> "SetPageTerm-definitionText"}, {XMLElement[
+    "span", {"class" -> 
+      "TermText notranslate lang-en"}, {"Part of the line that consists of \
+two endpoints and all points between."}]}], 
+ XMLElement[
+  "div", {"class" -> "SetPageTerm-definitionText"}, {XMLElement[
+    "span", {"class" -> 
+      "TermText notranslate lang-en"}, {"An angle with degree measure 90"}]}],
+  XMLElement[
+  "div", {"class" -> "SetPageTerm-definitionText"}, {XMLElement[
+    "span", {"class" -> 
+      "TermText notranslate lang-en"}, {"Has an endpoint and continues on \
+forever in ONE direction."}]}], 
+ XMLElement[
+  "div", {"class" -> "SetPageTerm-definitionText"}, {XMLElement[
+    "span", {"class" -> 
+      "TermText notranslate lang-en"}, {"3 or more points that lie on the \
+same line."}]}], 
+ XMLElement[
+  "div", {"class" -> "SetPageTerm-definitionText"}, {XMLElement[
+    "span", {"class" -> 
+      "TermText notranslate lang-en"}, {"Points or lines that lie on the same \
+plane."}]}]}
+
+listdefs = 
+ Cases[xml, 
+  XMLElement[_, {"class" -> "TermText notranslate lang-en"}, mice___] :> 
+   First@mice, Infinity]
+
+{"MIDPOINT", "The point on a segment exactly halfway between the endpoints of \
+the segment.", "SEGMENT", "Part of the line that consists of two endpoints \
+and all points between.", "RIGHT ANGLE", "An angle with degree measure 90", \
+"RAY", "Has an endpoint and continues on forever in ONE direction.", \
+"COLLINEAR", "3 or more points that lie on the same line.", "COPLANAR", \
+"Points or lines that lie on the same plane."}
+
+write the underlying algorithm here
+
+hackathonAPI[url_] := Module[
+  {body, xml, words, listword, defs, listdefs},
+  body = URLRead[URLDecode@url, "Body"];
+  
+  xml = ImportString[body, {"HTML", "XMLObject"}];
+  words = Cases[xml, XMLElement[_, {"class" -> "SetPageTerm-wordText"}, ___], 
+    Infinity];
+  listword = 
+   Cases[words, 
+      XMLElement[_, {"class" -> "TermText notranslate lang-en"}, bird___] :> 
+       First@bird, Infinity]
+     
+     
+     xml = ImportString[body, {"HTML", "XMLObject"}];
+  defs = Cases[xml, 
+      XMLElement[_, {"class" -> "SetPageTerm-definitionText"}, ___], Infinity]
+     listdefs = 
+    Cases[xml, 
+      XMLElement[_, {"class" -> "TermText notranslate lang-en"}, mice___] :> 
+       First@mice, Infinity]
+     Thread[words -> defs]
+  ]
+
+hackathonAPI[
+  URLEncode@url = "https://quizlet.com/353242389/art-history-flash-cards/";
+  ];
+
+Set::write: Tag URLEncode in URLEncode[https%3A%2F%2Fquizlet.com%2F308050806%2Fgeometry-vocabulary-flash-cards%2F] is Protected.
+
+ImportString::string: First argument URLRead[URLDecode[Null],Body] is not a string.
+
+ImportString::string: First argument URLRead[URLDecode[Null],Body] is not a string.
+
+Set::write: Tag Times in ImportString[URLRead[URLDecode[Null],Body],{HTML,XMLObject}] {} is Protected.
+
+Set::write: Tag Times in listdefs$25010 {} is Protected.
+
+General::stop: Further output of Set::write will be suppressed during this calculation.
+
+run all this to update API
+
+api = APIFunction[
+  {"url" -> "String"},
+  Function[
+   {input},
+   ExportForm[hackathonAPI[input["url"]], "JSON"]
+   ]
+  ]
+
+APIFunction[{"url" -> "String"}, 
+ Function[{input}, ExportForm[hackathonAPI[input["url"]], "JSON"]]]
+
+api[Association[
+   "url" -> URLEncode@
+     "https://quizlet.com/353242389/art-history-flash-cards/"]];
+
+First::normal: Nonatomic expression expected at position 1 in First[bird].
+
+Set::write: Tag Times in {First[bird],First[bird],First[bird],First[bird],First[bird],First[bird],First[bird],First[bird],First[bird],First[bird],First[bird],First[bird],<<1>>,<<1>>,First[bird],First[bird],First[bird],First[bird],First[bird],First[bird],First[bird],First[bird],First[bird],First[bird],First[bird]} <<1>> is Protected.
+
+Thread::tdlen: Objects of unequal length in {cubism,<<48>>,abstract painter that worked in German that was one of the founders of the movement. In Painting with White Border, he sought to avoid representation altogether. Art should avoid any reference to visual reality and concentrate on lines, shapes and color.} {<<1>>} cannot be combined.
+
+Set::write: Tag Times in listdefs$25091 {<<1>>} is Protected.
+
+$RecursionLimit::reclim2: Recursion depth of 1024 exceeded during evaluation of {XMLElement[div,{class->SetPageTerm-wordText},{XMLElement[span,{class->TermText notranslate lang-en},{cubism}]}]->defs$25091,<<23>>,XMLElement[div,{class->SetPageTerm-wordText},{XMLElement[span,{class->TermText notranslate lang-en},{Wassily Kandinsky}]}]->defs$25091}.
+
+obj = CloudDeploy[api, "junk/api", Permissions -> "Public"]
+
+\!\(
+TagBox[
+InterpretationBox[
+RowBox[{"CloudObject", "[", 
+TemplateBox[{
+      "\"https://www.wolframcloud.com/objects/mukilankarthikeyan357/junk/api\"\
+","https://www.wolframcloud.com/objects/mukilankarthikeyan357/junk/api"},
+"HyperlinkURL"], "]"}],
+CloudObject[
+    "https://www.wolframcloud.com/objects/mukilankarthikeyan357/junk/api"]],
+"RawBoxes"]\)
+
+obj[[1]]
+
+"https://www.wolframcloud.com/objects/mukilankarthikeyan357/junk/api"
+
+test it
+
+
+test = StringJoin[
+  obj[[1]],
+  "?url=",
+  URLEncode@"https://quizlet.com/353242389/art-history-flash-cards/"
+  ]
+
+"https://www.wolframcloud.com/objects/mukilankarthikeyan357/junk/api?url=\
+https%3A%2F%2Fquizlet.com%2F353242389%2Fart-history-flash-cards%2F"
+
+URLRead[test, "Body"]
+
+"Failed to export to JSON for input:
+Hold[{XMLElement[\"div\", {\"class\" -> \"SetPageTerm-wordText\"}, \
+{XMLElement[\"span\", {\"class\" -> \"TermText notranslate lang-en\"}, \
+{\"cubism\"}]}] -> defs$241411, XMLElement[\"div\", {\"class\" -> \
+\"SetPageTerm-wordText\"}, {XMLElement[\"span\", {\"class\" -> \"TermText \
+notranslate lang-en\"}, {\"dada\"}]}] -> defs$241411, XMLElement[\"div\", \
+{\"class\" -> \"SetPageTerm-wordText\"}, {XMLElement[\"span\", {\"class\" -> \
+\"TermText notranslate lang-en\"}, {\"expressionism\"}]}] -> defs$241411, \
+XMLElement[\"div\", {\"class\" -> \"SetPageTerm-wordText\"}, \
+{XMLElement[\"span\", {\"class\" -> \"TermText notranslate lang-en\"}, \
+{\"fauvism\"}]}] -> defs$241411, XMLElement[\"div\", {\"class\" -> \
+\"SetPageTerm-wordText\"}, {XMLElement[\"span\", {\"class\" -> \"TermText \
+notranslate lang-en\"}, {\"Impressionism\"}]}] -> defs$241411, \
+XMLElement[\"div\", {\"class\" -> \"SetPageTerm-wordText\"}, \
+{XMLElement[\"span\", {\"class\" -> \"TermText notranslate lang-en\"}, \
+{\"minimalism\"}]}] -> defs$241411, XMLElement[\"div\", {\"class\" -> \
+\"SetPageTerm-wordText\"}, {XMLElement[\"span\", {\"class\" -> \"TermText \
+notranslate lang-en\"}, {\"op art\"}]}] -> defs$241411, XMLElement[\"div\", {\
+\"class\" -> \"SetPageTerm-wordText\"}, {XMLElement[\"span\", {\"class\" -> \
+\"TermText notranslate lang-en\"}, {\"pop art\"}]}] -> defs$241411, \
+XMLElement[\"div\", {\"class\" -> \"SetPageTerm-wordText\"}, \
+{XMLElement[\"span\", {\"class\" -> \"TermText notranslate lang-en\"}, \
+{\"Renaissance art\"}]}] -> defs$241411, XMLElement[\"div\", {\"class\" -> \
+\"SetPageTerm-wordText\"}, {XMLElement[\"span\", {\"class\" -> \"TermText \
+notranslate lang-en\"}, {\"surrealism\"}]}] -> defs$241411, \
+XMLElement[\"div\", {\"class\" -> \"SetPageTerm-wordText\"}, \
+{XMLElement[\"span\", {\"class\" -> \"TermText notranslate lang-en\"}, \
+{\"Pointilism\"}]}] -> defs$241411, XMLElement[\"div\", {\"class\" -> \
+\"SetPageTerm-wordText\"}, {XMLElement[\"span\", {\"class\" -> \"TermText \
+notranslate lang-en\"}, {\"Post-Impressionism\"}]}] -> defs$241411, \
+XMLElement[\"div\", {\"class\" -> \"SetPageTerm-wordText\"}, \
+{XMLElement[\"span\", {\"class\" -> \"TermText notranslate lang-en\"}, \
+{\"Michelangelo\"}]}] -> defs$241411, XMLElement[\"div\", {\"class\" -> \
+\"SetPageTerm-wordText\"}, {XMLElement[\"span\", {\"class\" -> \"TermText \
+notranslate lang-en\"}, {\"Chuck Close\"}]}] -> defs$241411, XMLElement[\"div\
+\", {\"class\" -> \"SetPageTerm-wordText\"}, {XMLElement[\"span\", {\"class\" \
+-> \"TermText notranslate lang-en\"}, {\"Francisco Goya\"}]}] -> defs$241411, \
+XMLElement[\"div\", {\"class\" -> \"SetPageTerm-wordText\"}, \
+{XMLElement[\"span\", {\"class\" -> \"TermText notranslate lang-en\"}, \
+{\"Cubism\"}]}] -> defs$241411, XMLElement[\"div\", {\"class\" -> \
+\"SetPageTerm-wordText\"}, {XMLElement[\"span\", {\"class\" -> \"TermText \
+notranslate lang-en\"}, {\"Pieter Bruegel\"}]}] -> defs$241411, \
+XMLElement[\"div\", {\"class\" -> \"SetPageTerm-wordText\"}, \
+{XMLElement[\"span\", {\"class\" -> \"TermText notranslate lang-en\"}, \
+{\"Georgia O'Keeffe\"}]}] -> defs$241411, XMLElement[\"div\", {\"class\" -> \
+\"SetPageTerm-wordText\"}, {XMLElement[\"span\", {\"class\" -> \"TermText \
+notranslate lang-en\"}, {\"Jackson Pollock\"}]}] -> defs$241411, \
+XMLElement[\"div\", {\"class\" -> \"SetPageTerm-wordText\"}, \
+{XMLElement[\"span\", {\"class\" -> \"TermText notranslate lang-en\"}, {\"Jan \
+van Eyck\"}]}] -> defs$241411, XMLElement[\"div\", {\"class\" -> \
+\"SetPageTerm-wordText\"}, {XMLElement[\"span\", {\"class\" -> \"TermText \
+notranslate lang-en\"}, {\"Modern Art\"}]}] -> defs$241411, \
+XMLElement[\"div\", {\"class\" -> \"SetPageTerm-wordText\"}, \
+{XMLElement[\"span\", {\"class\" -> \"TermText notranslate lang-en\"}, \
+{\"Edgar Degas\"}]}] -> defs$241411, XMLElement[\"div\", {\"class\" -> \
+\"SetPageTerm-wordText\"}, {XMLElement[\"span\", {\"class\" -> \"TermText \
+notranslate lang-en\"}, {\"Roy Lichtenstein\"}]}] -> defs$241411, XMLElement[\
+\"div\", {\"class\" -> \"SetPageTerm-wordText\"}, {XMLElement[\"span\", \
+{\"class\" -> \"TermText notranslate lang-en\"}, {\"Mary Cassatt\"}]}] -> \
+defs$241411, XMLElement[\"div\", {\"class\" -> \"SetPageTerm-wordText\"}, \
+{XMLElement[\"span\", {\"class\" -> \"TermText notranslate lang-en\"}, \
+{\"Wassily Kandinsky\"}]}] -> defs$241411}*{\"cubism\", \"art movement in \
+which objects were broken into geometric shapes then reassembles; artists \
+that work in this style were Picasso and Braque\", \"dada\", \"began in 1920s \
+often satirical; duchamp, man ray\", \"expressionism\", \"art that expressed \
+emotions; van gogh, munch\", \"fauvism\", \"\\\"wild beasts\\\" vivid and \
+colors that were not real or found in life; matisse\", \"Impressionism\", \
+\"An artistic movement that sought to capture a momentary feel, or \
+impression, of the piece they were drawing\", \"minimalism\", \"art that was \
+simplified into basic colors and shapes, stella\", \"op art\", \"art that \
+showed optical illusions; vassarely\", \"pop art\", \"art based on popular \
+culture; Warhol, Thiebaud, Lichenstein\", \"Renaissance art\", \"considered \
+the revival of classical learning, literature and art; Durer, Michelangelo; \
+da vinci\", \"surrealism\", \"artwork based on dreams or fantasy; Dali, \
+Magritte, Kahlo\", \"Pointilism\", \"a genre of painting characterized by the \
+application of paint in dots and small strokes\", \"Post-Impressionism\", \
+\"An artistic movement that expressed world that could not normally be seen, \
+like dreams and fantasy.\", \"Michelangelo\", \"Painted the Sistine Chapel\", \
+\"Chuck Close\", \"was a photorealist who was only interested in recording \
+visual information not any insights into the portraits of his sitters. His \
+canvases were very large and every aspect of the face could be seen on close \
+viewing.\", \"Francisco Goya\", \"The Third of May is an example of social \
+commitment.\", \"Cubism\", \"A style of art in which the subject matter is \
+portrayed by geometric forms, especially cubes\", \"Pieter Bruegel\", \
+\"Pieter Bruegel, \\\"Peasant Wedding\\\" is an example of\", \"Georgia \
+O'Keeffe\", \"American artist that painted flowers and landscapes during the \
+great depression.\", \"Jackson Pollock\", \"A twentieth-century American \
+painter, famous for creating abstract paintings by dripping or pouring paint \
+on a canvas in complex swirls and spatters.\", \"Jan van Eyck\", \"Flemish \
+painter who was a founder of the Flemish school of painting and who pioneered \
+modern techniques of oil painting (1390-1441)\", \"Modern Art\", \"a general \
+term for the huge changes in art in the 20th C. Much modern art is about the \
+simplication and flattening of an image often to represent an essential \
+aspect of reality instead of a representation of a visual scene (real or \
+imagined\", \"Edgar Degas\", \"A nineteenth-century French painter and \
+sculptor. Among his preferred subjects were ballet dancers and scenes of cafe \
+life.\", \"Roy Lichtenstein\", \"was a pop artist who excerpted images from \
+comic books using the ben-day dot system.\", \"Mary Cassatt\", \"American \
+painter whose sensitive portrayals made her one of the prominent new \
+impressionists\", \"Wassily Kandinsky\", \"abstract painter that worked in \
+German that was one of the founders of the movement. In Painting with White \
+Border, he sought to avoid representation altogether. Art should avoid any \
+reference to visual reality and concentrate on lines, shapes and color.\"}]"
+
+NotebookDirectory[]
+
+"/wolframcloud/userfiles/d62/d6286ba9-f335-4e3a-9a2e-d64675986b0c/"
