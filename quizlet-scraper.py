@@ -1,38 +1,53 @@
-import uuid
-import urllib
-import urllib.request
+# scrape_quizlet.py
+import random
+import requests
 from bs4 import BeautifulSoup
-import os
 
-page = 2
-# while page <= 2:
-options_url = 'https://quizlet.com/subject/art-history/page/' + str(page) + '/?queryMeta=art+history'
-options_page = urllib.request.urlopen(options_url)
-questions_and_answers = {}
-soup = BeautifulSoup(options_page, "html.parser")
-link_list = soup.find_all('a', attrs={"class": "UILink"})
+def scrape_quizlet(topic: str, max_questions: int = 10):
+    """
+    Scrape Quizlet for `topic`, randomly pick one of top-3 sets,
+    produce MCQs: [{question, options, answer}], with options shuffled.
+    """
+    headers = {"User-Agent": "Mozilla/5.0"}
+    search_url = f"https://quizlet.com/subject/{topic.replace(' ', '-')}/"
+    search_page = requests.get(search_url, headers=headers, timeout=15)
+    soup = BeautifulSoup(search_page.text, "html.parser")
 
-for link in link_list:
-    quizlet = link.get('href')
-    if quizlet.startswith('https'): # check if the link is a proper URL
-        url = quizlet
-        page = urllib.request.urlopen(url)
-        baby_soup = BeautifulSoup(page, "html.parser")
+    # Collect top 3 flashcard set links
+    set_links = []
+    for a in soup.find_all("a", href=True):
+        href = a["href"]
+        if href.startswith("/") and "/flashcards/" in href:
+            full = "https://quizlet.com" + href
+            if full not in set_links:
+                set_links.append(full)
+        if len(set_links) >= 3:
+            break
 
-        # ques and answers: new changes
-        answer = baby_soup.find('span', attrs={"class": "TermText notranslate lang-en"})
-        temp = str(soup.select_one("."))
-        #temp = temp
-        #num_terms = int(temp)
-        print(temp)
-        '''
-        while: 
-            question = baby_soup.find('span', attrs={"class": "TermText notranslate lang-en"})
-            questions_and_answers[question] = answer # add key-value pair
-            if (answer = baby_soup.find('span',
-                attrs={'class': "TermText notranslate lang-en"})) == NULL: break
-        '''
-    #soup.findAll('p')
+    if not set_links:
+        return [{"error": f"No flashcard sets found for '{topic}'"}]
 
-    # page += 1;
-#Muki will give us a URL to pass a parameter to, from which we can get the data.
+    chosen_url = random.choice(set_links)
+    page = requests.get(chosen_url, headers=headers, timeout=15)
+    set_soup = BeautifulSoup(page.text, "html.parser")
+
+    # Extract term/def pairs (front/back alternate)
+    cards = set_soup.find_all("span", class_="TermText")
+    terms = [c.get_text(strip=True) for c in cards]
+    qa_pairs = [(terms[i], terms[i+1]) for i in range(0, len(terms) - 1, 2)]
+
+    if not qa_pairs:
+        return [{"error": "Could not extract flashcards."}]
+
+    # Build MCQs: 1 correct + 3 incorrect (when available), shuffled
+    all_answers = [b for _, b in qa_pairs]
+    questions = []
+    for q, correct in qa_pairs[:max_questions]:
+        pool = [a for a in all_answers if a != correct]
+        k = 3 if len(pool) >= 3 else max(0, len(pool))
+        wrongs = random.sample(pool, k) if k > 0 else []
+        options = wrongs + [correct]
+        random.shuffle(options)
+        questions.append({"question": q, "options": options, "answer": correct})
+
+    return questions

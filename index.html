@@ -1,105 +1,102 @@
 <!DOCTYPE html>
 <html>
 <head>
-
     <style>
         body {
             background-color: black;
+            color: white;
+            font-family: 'Open Sans Condensed', sans-serif;
         }
     </style>
-    <script
-              src="https://code.jquery.com/jquery-3.3.1.min.js"
-              integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-              crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
-            <script src="stopwatch.js" async></script>
-            <link rel="stylesheet" href="quiz-style.css"/>
-    <script type="text/javascript">
-        $('body').ready(function(){
-            var wins = 0;
-            var losses = 0;
-
-            window.win = function() {
-                console.log('Inside win');
-                wins=wins+1;
-                document.getElementById('win').innerHTML=wins;
-            };
-
-            window.lose = function() {
-                losses=losses+1;
-                document.getElementById('lose').innerHTML=losses;
-            };
-            window.submit = function() {
-                console.log("Submitting now");
-                alert("You got " + wins + " out of 5 correct.");
-            };
-        })
-            
-        </script>
+    <script src="stopwatch.js" async></script>
+    <link rel="stylesheet" href="quiz-style.css"/>
     <title>Quiz Wiz</title>
 </head>
-    <body>
-            <h1>Quiz Wiz</h1>
-            <h2><i>Common Computer Science Terminology</i></h2>
-            
-            <div>
-            <h4>Time yourself and see if you're</h4>
-            <h4>good as you think you are!</h4>
-            <h3><time>00:00:00</time></h3>
-            <button id="start" class="button1">start</button>
-            <button id="stop" class="button2">stop</button>
-            <button id="reset" class="button3">reset</button>
-                <!-- <var>word1</var> -->
-            <p>For the following questions, choose the correct term with the given definion:</p>
-            <p>1.Starting up a computer form a halted or powered down condtition</p>
-                <form>
-                    <label class="container">
-                        <input type="radio" name="answer" value="No" id="win" onclick="window.win()"> Boot Process<br>
-                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> Data Structure<br>
-                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> Proccessor<br> 
-                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> Conditionals<br>
-                    </label>
-                </form> 
-            <p>2. The principal that ISPs should deliver data to everyone equally, as fast as the technology allows?</p>
-                <form>
-                    <label class="container">
-                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> Cybersecurity<br>
-                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> Virtual<br>
-                        <input type="radio" name="answer" value="No" id="win" onclick="window.win()"> Network Neutrality<br>
-                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> The Internet of Things<br>
-                    </label>
-                </form>
-            <p>3. A service that provides storage space and other resources on the internet</p>
-                <form>
-                    <label class="container">
-                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> APIs<br>
-                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> MAC Address<br>
-                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> Fiber optic cables<br>
-                        <input type="radio" name="answer" value="No" id="win" onclick="window.win()"> Cloud Computing<br>
-                    </label>
-                </form>
-            <p>4. A device that provides power to a computer</p>
-                <form>
-                    <label class="container">
-                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> ISP<br>
-                        <input type="radio" name="answer" value="No" id="win" onclick="window.win()"> Power Supply<br>
-                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> Bubble sort<br>
-                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> Hard drive<br>
-                    </label>
-                </form>    
-            <p>5. Any type of computer network that is not connected by cables of any kind</p>
-                <form>
-                    <label class="container">
-                        <input type="radio" name="answer" value="No" id="win" onclick="window.win()"> Wireless Connection<br>
-                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> Protocol<br>
-                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> DDOS Attack<br>
-                        <input type="radio" name="answer" value="No" id="lose" onclick="lose()"> Insertion Sort<br>
-                        <button id="submit" class="button4" onclick="window.submit()">Submit</button>
-                    </label>
-                </form> 
-                <label class="container">
-            </div>  
-        
-    </body>
+<body>
+    <h1>Quiz Wiz</h1>
 
+    <!-- Search bar -->
+    <form id="search-form">
+        <input type="text" id="topic-input" placeholder="Enter topic name" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <h2 id="topic-title"></h2>
+    <h3><time>00:00:00</time></h3>
+    <button id="start" class="button1">start</button>
+    <button id="stop" class="button2">stop</button>
+    <button id="reset" class="button3">reset</button>
+
+    <div id="quiz-container"></div>
+
+    <button id="submit" class="button4" style="display:none;">Submit</button>
+
+    <h3 id="score" style="display:none;"></h3>
+
+    <script>
+        $(document).ready(function() {
+            let quizData = [];
+
+            // Search form submit
+            $("#search-form").on("submit", function(e) {
+                e.preventDefault();
+                let topic = $("#topic-input").val();
+                $("#topic-title").text("Quiz on: " + topic);
+
+                $.getJSON("/quizlet/" + encodeURIComponent(topic), function(data) {
+                    quizData = data.questions;
+                    renderQuiz(quizData);
+                });
+            });
+
+            // Render quiz
+            function renderQuiz(questions) {
+                $("#quiz-container").empty();
+                let qNum = 1;
+
+                questions.forEach(q => {
+                    let options = [...q.options];
+                    options.sort(() => Math.random() - 0.5); // shuffle
+
+                    let qHtml = `<p>${qNum}. ${q.question}</p><form class="quiz-form" data-answer="${q.answer}">`;
+
+                    options.forEach(opt => {
+                        qHtml += `
+                            <label>
+                                <input type="radio" name="q${qNum}" value="${opt}"> ${opt}<br>
+                            </label>`;
+                    });
+
+                    qHtml += "</form>";
+                    $("#quiz-container").append(qHtml);
+                    qNum++;
+                });
+
+                $("#submit").show();
+                $("#score").hide();
+            }
+
+            // Grade on submit
+            $("#submit").on("click", function() {
+                let total = quizData.length;
+                let correct = 0;
+
+                $(".quiz-form").each(function() {
+                    let correctAns = $(this).data("answer");
+                    let chosen = $(this).find("input[type=radio]:checked").val();
+
+                    if (chosen === correctAns) {
+                        correct++;
+                    }
+                });
+
+                $("#score").text(`You scored ${correct} out of ${total}`).show();
+            });
+        });
+    </script>
+</body>
 </html>

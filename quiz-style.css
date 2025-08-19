@@ -1,87 +1,87 @@
+/* quiz-style.css */
 
+/* Import Tailwind */
+@import url("https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css");
+
+/* Base styles */
+body {
+  @apply bg-gray-900 text-gray-100 font-sans leading-relaxed min-h-screen flex flex-col justify-center items-center px-4;
+}
+
+/* Main container card */
+main {
+  @apply w-full max-w-4xl bg-gray-800 rounded-2xl shadow-2xl p-8 flex flex-col items-center;
+}
+
+/* Headers */
 h1 {
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-weight: 20;
-  color: yellow;
-  font-size: 50px;  
-  text-align: center;    
+  @apply text-4xl font-extrabold text-blue-400 mb-2;
 }
 
 h2 {
-  font-family: sans-serif, monospace;
-  color: white;
-  font-size: 25px;
-  text-align: center;
+  @apply text-2xl font-semibold text-gray-200 mb-4;
 }
 
 h3 {
-  font-family: sans-serif;
-  color: gray;
-  font-size: 25px;
-  margin-left: 38px;
+  @apply text-lg font-medium text-gray-400 mb-6;
 }
 
-h4 {
-  font-family: cursive, sans-serif, monospace;
-  color: white;
-  font-size: 15px;
-  padding: 0;
-  margin: 0;
-  line-height: 15px;
+/* Search bar */
+#search-form {
+  @apply flex items-center space-x-2 mb-6;
 }
 
-h5 {
-  font-family: cursive, sans-serif, monospace;
-  color: gray;
-  font-size: 10px;
-  text-align: center;
-  margin-top: 200px;
+#topic-input {
+  @apply w-64 px-4 py-2 rounded-lg border border-gray-600 bg-gray-700 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400;
 }
 
-p {
-  font-family: sans-serif, monospace;
-  color: lightblue;
-  font-size: 20px;
-  margin-left: 400px;
-  margin-top: 30px;
+#search-form button {
+  @apply px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition;
+}
+
+/* Stopwatch buttons */
+.button1,
+.button2,
+.button3,
+.button4 {
+  @apply px-4 py-2 rounded-lg font-semibold shadow-md transition;
 }
 
 .button1 {
-  font-family: sans-serif, monospace;
-  background-color: black; 
-  color: limegreen;
-  border: none;
+  @apply bg-green-500 text-white hover:bg-green-600;
 }
 
 .button2 {
-  font-family: sans-serif, monospace;
-  background-color: black; 
-  color: red;
-  border: none;
+  @apply bg-red-500 text-white hover:bg-red-600;
 }
 
 .button3 {
-  font-family: sans-serif, monospace;
-  background-color: black; 
-  color: yellow;
-  border: none;
+  @apply bg-yellow-500 text-white hover:bg-yellow-600;
 }
 
 .button4 {
-  background-color: lightgreen;
-  vertical-align: middle;
-  margin-left: 100px;
-  border: none;
+  @apply bg-purple-500 text-white hover:bg-purple-600 mt-6;
 }
 
-.container {  
-  display: block;
-  color: white;
-  font-family: sans-serif, monospace;  
-  vertical-align: middle;
-  margin: 0px;
-  padding-left: 25px;
-  margin-left: 400px;
-  cursor: pointer;
-  font-size: 18px;
+/* Quiz container */
+#quiz-container {
+  @apply w-full bg-gray-700 rounded-xl shadow-lg p-6 space-y-6 mb-8;
+}
+
+#quiz-container p {
+  @apply text-xl font-medium text-gray-100 mb-3;
+}
+
+/* Radio buttons */
+.quiz-form label {
+  @apply flex items-center space-x-2 bg-gray-600 rounded-lg px-4 py-2 mb-2 cursor-pointer transition hover:bg-gray-500;
+}
+
+.quiz-form input[type="radio"] {
+  @apply form-radio text-blue-400 focus:ring-blue-400;
+}
+
+/* Score */
+#score {
+  @apply text-2xl font-bold text-green-400 mt-4;
 }
