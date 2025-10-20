@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuizWiz</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='quiz-style.css') }}">
+</head>
+<body>
+  <main>
+    <!-- Header section with image and title -->
+    <div id="logo-container">
+      <img src="{{ url_for('static', filename='quiz-wizard.png') }}" alt="QuizWiz Logo" id="quiz-logo" class="rounded-xl flex-shrink-0">
+    </div>
+    <div id="header-section">
+      <div>
+        <h1>QuizWiz</h1>
+        <h2>Quizlet-based Quiz Generator</h2>
+      </div>
+    </div>
+
+    <!-- Search bar -->
+    <form id="search-form" action="#">
+      <input type="text" id="topic-input" placeholder="Enter topic..." required>
+      <button type="submit" id="search-btn">Search</button>
+    </form>
+
+    <!-- Stopwatch -->
+    <section id="stopwatch-container">
+      <h3 class="stopwatch-title">Stopwatch</h3>
+      <div id="stopwatch" class="stopwatch-title">
+        <span id="time">00:00:00</span>
+      </div>
+      <div class="stopwatch-buttons">
+        <button class="button1" onclick="start()">Start</button>
+        <button class="button2" onclick="stop()">Stop</button>
+        <button class="button3" onclick="reset()">Reset</button>
+      </div>
+    </section>
+
+    <!-- Quiz container -->
+    <section id="quiz-container"></section>
+
+    <!-- Submit button -->
+    <button class="button4" onclick="submitQuiz()">Submit</button>
+
+    <!-- Score -->
+    <div id="score"></div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='quiz-script.js') }}"></script>
+  <script src="{{ url_for('static', filename='stopwatch.js') }}"></script>
+</body>
+</html>
